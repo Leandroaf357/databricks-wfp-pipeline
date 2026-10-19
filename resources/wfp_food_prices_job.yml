@@ -1,0 +1,35 @@
+resources:
+  jobs:
+    market_prices_job:
+      name: "Pipeline WFP Market Prices - Medallion & RAG"
+      tasks:
+        - task_key: setup_infra
+          notebook_task:
+            notebook_path: ../src/setup/00_setup_infra.sql
+            
+        - task_key: ingestao_bronze
+          depends_on:
+            - task_key: setup_infra
+          notebook_task:
+            # Mantém o .py porque na sua barra lateral o ficheiro tem .py
+            notebook_path: ../src/bronze/01_ingestao_bronze.py
+            
+        - task_key: limpeza_silver
+          depends_on:
+            - task_key: ingestao_bronze
+          notebook_task:
+            # Mantém o .py porque na sua barra lateral o ficheiro tem .py
+            notebook_path: ../src/silver/02_limpeza_silver.py
+            
+        - task_key: agregacao_gold
+          depends_on:
+            - task_key: limpeza_silver
+          notebook_task:
+            notebook_path: ../src/gold/03_agregacao_gold.py
+            
+        - task_key: rag_intelligence
+          depends_on:
+            - task_key: agregacao_gold
+          notebook_task:
+            # Mantém o .py porque na sua barra lateral o ficheiro tem .py
+            notebook_path: ../src/intelligence/04_rag_market_gating.py

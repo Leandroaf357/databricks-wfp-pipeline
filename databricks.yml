@@ -1,0 +1,15 @@
+bundle:
+  name: pipeline_market_prices_bundle
+
+include:
+  - resources/*.yml
+
+targets:
+  development:
+    default: true
+    workspace:
+      host: https://dbc-63ce2688-1ea4.cloud.databricks.com
+  production:
+    workspace:
+      host: https://<seu-workspace-url>
+      root_path: /Shared/bundles/${bundle.name}
