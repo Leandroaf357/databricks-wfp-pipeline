@@ -11,14 +11,12 @@ resources:
           depends_on:
             - task_key: setup_infra
           notebook_task:
-            # Mantém o .py porque na sua barra lateral o ficheiro tem .py
             notebook_path: ../src/bronze/01_ingestao_bronze.py
             
         - task_key: limpeza_silver
           depends_on:
             - task_key: ingestao_bronze
           notebook_task:
-            # Mantém o .py porque na sua barra lateral o ficheiro tem .py
             notebook_path: ../src/silver/02_limpeza_silver.py
             
         - task_key: agregacao_gold
@@ -31,5 +29,4 @@ resources:
           depends_on:
             - task_key: agregacao_gold
           notebook_task:
-            # Mantém o .py porque na sua barra lateral o ficheiro tem .py
             notebook_path: ../src/intelligence/04_rag_market_gating.py
